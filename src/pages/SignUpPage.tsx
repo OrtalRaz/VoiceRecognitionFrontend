@@ -1,46 +1,41 @@
-import React from 'react';
-import './HomePage.css';
-import website_logo from '../pictures/website_logo.png';
-import {HomeHeader} from "../common/MenuHeader";
-import Input from "../common/Input";
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {createUser} from "../client";
+import Input from "../common/Input";
+import {HomeHeader} from "../common/MenuHeader";
+import website_logo from '../pictures/website_logo.png';
+import './HomePage.css';
 
-type SignUpFormProps = {};
-type SignUpFormState = {username: string, password: string, email: string};
-interface SignUpFormEventTarget extends HTMLInputElement {name: string}
-class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState> {
-    constructor(props: SignUpFormProps) {
-        super(props);
-        this.state = {username: '', password: '', email: ''}
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+const SignUpForm = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
 
-    handleChange(event: React.ChangeEvent<SignUpFormEventTarget>) {
-        const name = event.target.name;
-        const value = event.target.value;
-        this.setState<never>({[name]: value});
-    }
+    const history = useHistory();
 
-    handleSubmit(event: React.FormEvent) {
+    const handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value);
+    const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value);
+    const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value);
+
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        createUser(this.state.username, this.state.password, this.state.email)
+        createUser(username, password, email)
             .then(user => alert(`User created with ID ${user.user_id}`))
+            .then(() => history.push('/login'))
             .catch(reason => alert(`Failed creating user: ${reason}`))
     }
 
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <Input title="Username" type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
-                <Input title="Password" type="text" name="password" value={this.state.password} onChange={this.handleChange}/>
-                <Input title="Email" type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
-                <input type="submit" value="Submit" />
-            </form>
-        );
-    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <Input title="Username" type="text" name="username" value={username} onChange={handleUsername}/>
+            <Input title="Password" type="text" name="password" value={password} onChange={handlePassword}/>
+            <Input title="Email" type="text" name="email" value={email} onChange={handleEmail}/>
+            <input type="submit" value="Submit"/>
+        </form>
+    )
 }
+
 
 function SignUpPage() {
     return (

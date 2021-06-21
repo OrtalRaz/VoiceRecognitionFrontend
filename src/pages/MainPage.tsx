@@ -1,15 +1,15 @@
 import React from 'react';
-import './HomePage.css';
+import ImagesRow from "../common/image/ImagesRow";
+import '../common/image/ImagesRow.css';
+import MenuHeader, {HomeHeader} from "../common/MenuHeader";
+import corona from '../pictures/corona/corona.jpg';
+import food from '../pictures/food/food.png';
+import music from '../pictures/music/music.jpg';
 import politics from '../pictures/politics/politics.jpg';
 import sports from '../pictures/sports/sports.jpg';
-import corona from '../pictures/corona/corona.jpg';
-import music from '../pictures/music/music.jpg';
 import travel from '../pictures/travel/travel.jpg';
-import food from '../pictures/food/food.png';
 import website_logo from '../pictures/website_logo.png';
-import '../common/image/ImagesRow.css';
-import ImagesRow from "../common/image/ImagesRow";
-import MenuHeader, {HomeHeader} from "../common/MenuHeader";
+import './HomePage.css';
 
 function MainPage() {
     return (

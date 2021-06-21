@@ -23,7 +23,7 @@ const SignUpForm = () => {
         createUser(username, password, email)
             .then(user => alert(`User created with ID ${user.user_id}`))
             .then(() => history.push('/login'))
-            .catch(reason => alert(`Failed creating user: ${reason}`))
+            .catch(error => alert(`Failed creating user: ${error.message}.`))
     }
 
     return (

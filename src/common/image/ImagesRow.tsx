@@ -6,7 +6,7 @@ type ImagesRowProps = { images: ImageProps[] }
 
 function ImagesRow(props: ImagesRowProps) {
     const images = props.images.map(imageProps => {
-        return <div className="column">
+        return <div className="column" key={imageProps.name}>
             <img src={imageProps.src} alt={imageProps.name} height={imageProps.height} width={imageProps.width}/>
         </div>
     })

@@ -1,41 +1,41 @@
-import React from 'react';
-import './HomePage.css';
-import website_logo from '../pictures/website_logo.png';
-import {HomeHeader} from "../common/MenuHeader";
+import React, {useState} from 'react';
+import {useHistory} from "react-router-dom";
+import {login} from "../client";
 import Input from "../common/Input";
-import {LinkButton} from "../common/button/Button";
+import {HomeHeader} from "../common/MenuHeader";
+import website_logo from '../pictures/website_logo.png';
+import './HomePage.css';
 
-type LoginFormProps = {};
-type LoginFormState = {username: string, password: string};
-interface LoginFormEventTarget extends HTMLInputElement {name: string}
-class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
-    constructor(props: LoginFormProps) {
-        super(props);
-        this.state = {username: '', password: ''}
+interface LoginFormEventTarget extends HTMLInputElement {
+    name: string
+}
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+const LoginForm = () => {
+    const [state, setState] = useState({username: '', password: ''});
 
-    handleChange(event: React.ChangeEvent<LoginFormEventTarget>) {
+    const history = useHistory();
+
+    const handleChange = (event: React.ChangeEvent<LoginFormEventTarget>) => {
         const name = event.target.name;
         const value = event.target.value;
-        this.setState<never>({[name]: value});
+        setState({...state, [name]: value});
     }
 
-    handleSubmit(event: React.FormEvent) {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        alert(`Submitted username: ${this.state.username}, password: ${this.state.password}`);
+        login(state.username, state.password)
+            .then(() => alert(`Logged in successfully!`))
+            .then(() => history.push('/main'))
+            .catch(error => alert(`Failed logging in: ${error.message}.`))
     }
 
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <Input title="Username" type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
-                <Input title="Password" type="text" name="password" value={this.state.password} onChange={this.handleChange}/>
-            </form>
-        );
-    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <Input title="Username" type="text" name="username" value={state.username} onChange={handleChange}/>
+            <Input title="Password" type="password" name="password" value={state.password} onChange={handleChange}/>
+            <input type="submit" value="Log In"/>
+        </form>
+    );
 }
 
 function LoginPage() {
@@ -48,9 +48,6 @@ function LoginPage() {
                 <img src={website_logo} alt="website logo" height={300} width={500}/>
                 <br/>
                 <LoginForm/>
-                <div className="column">
-                    <LinkButton text="LOG IN" to='/main'/>
-                </div>
             </header>
         </div>
     );

@@ -5,12 +5,12 @@ import {HomeHeader} from "../common/MenuHeader";
 import Input from "../common/Input";
 
 type ChangingFormProps = {};
-type ChangingFormState = {username: string, password: string, newpassword: string};
+type ChangingFormState = {username: string, password: string, newPassword: string};
 interface ChangingFormEventTarget extends HTMLInputElement {name: string}
 class ChangingForm extends React.Component<ChangingFormProps, ChangingFormState> {
     constructor(props: ChangingFormProps) {
         super(props);
-        this.state = {username: '', password: '', newpassword: ''}
+        this.state = {username: '', password: '', newPassword: ''}
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,7 +32,7 @@ class ChangingForm extends React.Component<ChangingFormProps, ChangingFormState>
             <form onSubmit={this.handleSubmit}>
                 <Input title="Username" type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
                 <Input title="Password" type="text" name="password" value={this.state.password} onChange={this.handleChange}/>
-                <Input title="New Password" type="text" name="new password" value={this.state.newpassword} onChange={this.handleChange}/>
+                <Input title="New Password" type="text" name="newPassword" value={this.state.newPassword} onChange={this.handleChange}/>
                 <input type="submit" value="Submit" />
             </form>
         );

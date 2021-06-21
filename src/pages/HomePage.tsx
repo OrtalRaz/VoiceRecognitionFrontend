@@ -1,8 +1,7 @@
 import React from 'react';
 import {LinkButton} from "../common/button/Button";
-import './HomePage.css';
 import website_logo from '../pictures/website_logo.png';
-
+import './HomePage.css';
 
 function HomePage() {
     return (
@@ -14,7 +13,7 @@ function HomePage() {
                     WELCOME TO THE NEWS WEBSITE
                 </p>
                 <div className="column">
-                    <LinkButton text="LOG IN" to='/connection'/>
+                    <LinkButton text="LOG IN" to='/login'/>
                 </div>
                 <div className="column">
                     <LinkButton text="SIGN UP" to='/signup'/>
